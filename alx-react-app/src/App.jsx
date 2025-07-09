@@ -1,3 +1,10 @@
+// import header, main content, and footer components
+import Header from './components/Header';
+import MainContent from './components/MainContent';
+import Footer from './components/Footer';
+
+// welcome message component
+
 import WelcomeMessage from './components/WelcomeMessage';
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
@@ -19,6 +26,11 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <WelcomeMessage />
+      <>
+      <Header />
+      <MainContent />
+      <Footer />
+      </>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -34,4 +46,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

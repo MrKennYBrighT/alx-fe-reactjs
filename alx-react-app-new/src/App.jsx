@@ -4,6 +4,7 @@ import MainContent from './components/MainContent';
 import UserProfile from './components/UserProfile';
 import Footer from './components/Footer';
 import React from 'react';
+import Counter from './components/Counter';
 
 
 // welcome message component

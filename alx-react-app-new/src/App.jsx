@@ -3,6 +3,7 @@ import Header from './components/Header';
 import MainContent from './components/MainContent';
 import UserProfile from './components/UserProfile';
 import Footer from './components/Footer';
+import React from 'react';
 
 
 // welcome message component

@@ -1,10 +1,12 @@
+import Layout from './Layout'; 
+
 function Services() {
-  const style = {
+  const contentStyle = {
     padding: '40px',
     backgroundColor: '#fdfdfd',
     color: '#555',
-    maxWidth: '600px',
-    margin: '0 auto',
+    borderRadius: '8px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
   };
 
   const listStyle = {
@@ -13,14 +15,16 @@ function Services() {
   };
 
   return (
-    <div style={style}>
-      <h1>Our Services</h1>
-      <ul style={listStyle}>
-        <li>Technology Consulting</li>
-        <li>Market Analysis</li>
-        <li>Product Development</li>
-      </ul>
-    </div>
+    <Layout>
+      <div style={contentStyle}>
+        <h1>Our Services</h1>
+        <ul style={listStyle}>
+          <li>Technology Consulting</li>
+          <li>Market Analysis</li>
+          <li>Product Development</li>
+        </ul>
+      </div>
+    </Layout>
   );
 }
 

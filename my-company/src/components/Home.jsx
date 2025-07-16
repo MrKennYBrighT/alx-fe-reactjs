@@ -1,4 +1,4 @@
-import Layout from './Layout'; // Adjust path if necessary
+import Layout from './Layout';
 
 function Home() {
   const contentStyle = {

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Layout from './Layout'; 
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -18,9 +19,9 @@ function Contact() {
   const containerStyle = {
     padding: '40px',
     backgroundColor: '#fafafa',
-    maxWidth: '600px',
-    margin: '0 auto',
     color: '#333',
+    borderRadius: '8px',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
   };
 
   const inputStyle = {
@@ -43,35 +44,37 @@ function Contact() {
   };
 
   return (
-    <div style={containerStyle}>
-      <h1>Contact Us</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          style={inputStyle}
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        <input
-          style={inputStyle}
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <textarea
-          style={inputStyle}
-          name="message"
-          placeholder="Your Message"
-          value={formData.message}
-          onChange={handleChange}
-        />
-        <button type="submit" style={buttonStyle}>Send Message</button>
-      </form>
-    </div>
+    <Layout>
+      <div style={containerStyle}>
+        <h1 style={{textAlign:'center'}}>Contact Us</h1>
+        <form onSubmit={handleSubmit}>
+          <input
+            style={inputStyle}
+            type="text"
+            name="name"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <input
+            style={inputStyle}
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <textarea
+            style={inputStyle}
+            name="message"
+            placeholder="Your Message"
+            value={formData.message}
+            onChange={handleChange}
+          />
+          <button type="submit" style={buttonStyle}>Send Message</button>
+        </form>
+      </div>
+    </Layout>
   );
 }
 

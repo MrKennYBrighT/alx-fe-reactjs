@@ -1,14 +1,13 @@
-// Layout.jsx
 function Layout({ children }) {
-  const containerStyle = {
-    maxWidth: '800px',
-    margin: '0 auto',
+  const wrapperStyle = {
+    width: '100vw',
+    minHeight: '100vh',
     padding: '40px',
+    boxSizing: 'border-box',
     backgroundColor: '#fafafa',
-    minHeight: '80vh',
   };
 
-  return <div style={containerStyle}>{children}</div>;
+  return <div style={wrapperStyle}>{children}</div>;
 }
 
 export default Layout;

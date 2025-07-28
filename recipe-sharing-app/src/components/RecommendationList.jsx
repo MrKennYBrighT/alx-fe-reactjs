@@ -1,24 +1,32 @@
-import React from "react";
-import { useRecipeStore } from "./recipeStore";
+import React from 'react';
+import { useRecipeStore } from './recipeStore';
 
-const RecommendationList = () => {
+function RecommendationsList({ allRecipes }) {
   const { recommendations } = useRecipeStore();
 
+  const recommendedRecipes = allRecipes.filter((recipe) =>
+    recommendations.includes(recipe.id)
+  );
+
   return (
-    <div>
+    <div className="recommendations-list">
       <h2>Recommended Recipes</h2>
-      {recommendations.length === 0 ? (
-        <p>No recommendations yet. Add some favorites!</p>
+
+      {recommendedRecipes.length === 0 ? (
+        <p>No recommendations available yet.</p>
       ) : (
-        recommendations.map(recipe => (
-          <div key={recipe.id}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-        ))
+        <ul>
+          {recommendedRecipes.map((recipe) => (
+            <li key={recipe.id} className="recommended-item">
+              <h4>{recipe.title}</h4>
+              <img src={recipe.imageUrl} alt={recipe.title} />
+              <p>{recipe.description}</p>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
-};
+}
 
-export default RecommendationList;
+export default RecommendationsList;

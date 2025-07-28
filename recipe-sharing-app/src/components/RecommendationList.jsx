@@ -1,6 +1,6 @@
 // src/components/RecommendationsList.jsx
 import React from "react";
-import { useRecipeStore } from "./recipeStore";
+import { useRecipeStore } from "..components/recipeStore";
 
 const RecommendationsList = () => {
   const { recipes, recommendations } = useRecipeStore();

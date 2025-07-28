@@ -1,20 +1,17 @@
-import useRecipeStore from '../store/recipeStore';
+import React from 'react';
+import useRecipeStore from './recipeStore'; // updated path
 
 const RecipeList = () => {
   const recipes = useRecipeStore((state) => state.recipes);
 
   return (
     <div>
-      {recipes.length === 0 ? (
-        <p>No recipes yet. Add one using the form above.</p>
-      ) : (
-        recipes.map((recipe) => (
-          <div key={recipe.id}>
-            <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-          </div>
-        ))
-      )}
+      <h3>Recipe List</h3>
+      <ul>
+        {recipes.map((recipe, index) => (
+          <li key={index}>{recipe}</li>
+        ))}
+      </ul>
     </div>
   );
 };

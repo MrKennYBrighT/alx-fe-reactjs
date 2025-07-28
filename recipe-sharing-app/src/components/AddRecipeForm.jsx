@@ -1,32 +1,25 @@
-import { useState } from 'react';
-import useRecipeStore from '../store/recipeStore';
+import React, { useState } from 'react';
+import useRecipeStore from './recipeStore'; // updated path
 
 const AddRecipeForm = () => {
+  const [recipe, setRecipe] = useState('');
   const addRecipe = useRecipeStore((state) => state.addRecipe);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (!title.trim() || !description.trim()) return;
-
-    addRecipe({ id: Date.now(), title, description });
-    setTitle('');
-    setDescription('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (recipe.trim()) {
+      addRecipe(recipe);
+      setRecipe('');
+    }
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-      />
-      <textarea
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        placeholder="Description"
+        value={recipe}
+        onChange={(e) => setRecipe(e.target.value)}
+        placeholder="Add a new recipe"
       />
       <button type="submit">Add Recipe</button>
     </form>

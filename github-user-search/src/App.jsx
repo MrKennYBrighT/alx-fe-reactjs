@@ -22,7 +22,7 @@ function App() {
       <div style={{ padding: '20px', fontFamily: 'Arial' }}>
         {/* Layout Header */}
         <header>
-          <h1>Welcome to Kenny's React App 🚀</h1>
+          <h1>Welcome to KennYBrighT React App 🚀</h1>
           <nav>
             <Link to="/" style={{ marginRight: '10px' }}>Home</Link>
             <Link to="/about" style={{ marginRight: '10px' }}>About</Link>

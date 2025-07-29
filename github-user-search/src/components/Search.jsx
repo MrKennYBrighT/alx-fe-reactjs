@@ -1,69 +1,88 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import axios from 'axios';
 
-const SearchForm = ({ onSearch }) => {
+const SearchForm = () => {
   const [username, setUsername] = useState('');
   const [location, setLocation] = useState('');
   const [minRepos, setMinRepos] = useState('');
+  const [results, setResults] = useState([]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSearch({ username, location, minRepos });
+    let query = '';
+
+    if (username) query += `${username} `;
+    if (location) query += `location:${location} `;
+    if (minRepos) query += `repos:>${minRepos} `;
+
+    try {
+      const response = await axios.get(
+        `https://api.github.com/search/users?q=${encodeURIComponent(query.trim())}`
+      );
+      setResults(response.data.items || []);
+    } catch (error) {
+      console.error('Search failed:', error);
+      setResults([]);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white shadow-md p-6 rounded-lg max-w-md mx-auto space-y-4">
-      <h2 className="text-xl font-semibold text-gray-700">GitHub User Search</h2>
-
-      <div>
-        <label htmlFor="username" className="block text-sm font-medium text-gray-600">Username</label>
+    <div className="max-w-xl mx-auto">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow space-y-4">
+        {/* 🔤 Username Input */}
         <input
-          id="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          required
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
           placeholder="Enter GitHub username"
+          className="w-full p-2 border rounded-md"
         />
-      </div>
 
-      <div>
-        <label htmlFor="location" className="block text-sm font-medium text-gray-600">Location</label>
+        {/* 🌍 Location Input */}
         <input
-          id="location"
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-          placeholder="e.g. Lagos, Nigeria"
+          placeholder="Filter by location"
+          className="w-full p-2 border rounded-md"
         />
-      </div>
 
-      <div>
-        <label htmlFor="minRepos" className="block text-sm font-medium text-gray-600">Minimum Repositories</label>
+        {/* 🧮 Minimum Repositories Input */}
         <input
-          id="minRepos"
           type="number"
           value={minRepos}
           onChange={(e) => setMinRepos(e.target.value)}
-          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
-          placeholder="e.g. 10"
+          placeholder="Minimum number of repositories"
+          className="w-full p-2 border rounded-md"
         />
+
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+        >
+          Search GitHub Users
+        </button>
+      </form>
+
+      {/* 🔎 Display Results */}
+      <div className="mt-6 space-y-4">
+        {results.length > 0 &&
+          results.map((user) => (
+            <div key={user.id} className="p-4 border rounded-md hover:bg-gray-50">
+              <p className="font-semibold">{user.login}</p>
+              <a
+                href={user.html_url}
+                className="text-blue-500 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Profile
+              </a>
+            </div>
+          ))}
       </div>
-
-      <button
-        type="submit"
-        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
-      >
-        Search Users
-      </button>
-    </form>
+    </div>
   );
-};
-
-SearchForm.propTypes = {
-  onSearch: PropTypes.func.isRequired,
 };
 
 export default SearchForm;

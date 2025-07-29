@@ -35,9 +35,9 @@ function Search({ onSearch, userData, loading, error }) {
         </button>
       </form>
 
-      {/* Conditional rendering */}
+      {/* Results Display Based on Search State */}
       {loading && <p>Loading...</p>}
-      {error && <p>Looks like we can’t find the user.</p>}
+      {error && <p>Looks like we cant find the user</p>}
       {userData && (
         <div style={{ marginTop: '20px' }}>
           <img

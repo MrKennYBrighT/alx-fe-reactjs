@@ -1,73 +1,62 @@
-// src/components/Search.jsx
-
+// src/components/SearchForm.jsx
 import React, { useState } from 'react';
-import { fetchUserData } from '../services/githubService';
 
-function Search() {
+const SearchForm = ({ onSearch }) => {
   const [username, setUsername] = useState('');
-  const [userData, setUserData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [location, setLocation] = useState('');
+  const [minRepos, setMinRepos] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!username.trim()) return;
-
-    setLoading(true);
-    setError(false);
-    setUserData(null);
-
-    try {
-      const data = await fetchUserData(username.trim());
-      setUserData(data);
-    } catch {
-      setError(true); // ✅ precise catch clause
-    } finally {
-      setLoading(false);
-    }
+    onSearch({ username, location, minRepos });
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="github-user">GitHub Username:</label>
-        <br />
+    <form onSubmit={handleSubmit} className="bg-white shadow-md p-6 rounded-lg max-w-md mx-auto space-y-4">
+      <h2 className="text-xl font-semibold text-gray-700">GitHub User Search</h2>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-600">Username</label>
         <input
-          id="github-user"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          required
+          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
           placeholder="Enter GitHub username"
-          style={{ marginTop: '8px', padding: '8px', width: '250px' }}
         />
-        <br />
-        <button
-          type="submit"
-          style={{ marginTop: '10px', padding: '8px 16px' }}
-        >
-          Search
-        </button>
-      </form>
+      </div>
 
-      {/* Search result feedback */}
-      {loading && <p>Loading...</p>}
-      {error && <p>Looks like we cant find the user</p>}
-      {userData && (
-        <div style={{ marginTop: '20px' }}>
-          <img
-            src={userData.avatar_url}
-            alt="User Avatar"
-            width="100"
-            style={{ borderRadius: '8px' }}
-          />
-          <h3>{userData.name || userData.login}</h3>
-          <a href={userData.html_url} target="_blank" rel="noreferrer">
-            View GitHub Profile
-          </a>
-        </div>
-      )}
-    </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-600">Location</label>
+        <input
+          type="text"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+          placeholder="e.g. Lagos, Nigeria"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-600">Minimum Repositories</label>
+        <input
+          type="number"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-400"
+          placeholder="e.g. 10"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+      >
+        Search Users
+      </button>
+    </form>
   );
-}
+};
 
-export default Search;
+export default SearchForm;

@@ -1,15 +1,29 @@
 // src/components/Search.jsx
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { fetchUserData } from '../services/githubService';
 
-function Search({ onSearch, userData, loading, error }) {
+function Search() {
   const [username, setUsername] = useState('');
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username.trim()) {
-      onSearch(username.trim());
+    if (!username.trim()) return;
+
+    setLoading(true);
+    setError(false);
+    setUserData(null);
+
+    try {
+      const data = await fetchUserData(username.trim());
+      setUserData(data);
+    } catch {
+      setError(true); // ✅ precise catch clause
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -35,7 +49,7 @@ function Search({ onSearch, userData, loading, error }) {
         </button>
       </form>
 
-      {/* Results Display Based on Search State */}
+      {/* Search result feedback */}
       {loading && <p>Loading...</p>}
       {error && <p>Looks like we cant find the user</p>}
       {userData && (
@@ -55,12 +69,5 @@ function Search({ onSearch, userData, loading, error }) {
     </div>
   );
 }
-
-Search.propTypes = {
-  onSearch: PropTypes.func.isRequired,
-  userData: PropTypes.object,
-  loading: PropTypes.bool,
-  error: PropTypes.bool,
-};
 
 export default Search;

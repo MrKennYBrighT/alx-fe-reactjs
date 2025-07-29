@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import {
+  buildSearchQuery,
+  searchUsers,
+  fetchUserDetails
+} from '../services/githubService';
 
 const SearchForm = () => {
   const [username, setUsername] = useState('');
@@ -10,12 +14,12 @@ const SearchForm = () => {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const fetchUserDetails = async (users) => {
+  const fetchFullResults = async (userList) => {
     const detailedUsers = await Promise.all(
-      users.map(async (user) => {
+      userList.map(async (user) => {
         try {
-          const response = await axios.get(user.url);
-          return response.data;
+          const userData = await fetchUserDetails(user.url);
+          return userData;
         } catch (error) {
           console.error('Error fetching user details:', error);
           return null;
@@ -25,26 +29,16 @@ const SearchForm = () => {
     return detailedUsers.filter(Boolean);
   };
 
-  const buildQuery = () => {
-    let q = '';
-    if (username) q += `${username} `;
-    if (location) q += `location:${location} `;
-    if (minRepos) q += `repos:>${minRepos} `;
-    return q.trim();
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const q = buildQuery();
+    const q = buildSearchQuery({ username, location, minRepos });
     setQuery(q);
     setPage(1);
 
     try {
-      const response = await axios.get(
-        `https://api.github.com/search/users?q=${encodeURIComponent(q)}&per_page=10&page=1`
-      );
-      const detailedResults = await fetchUserDetails(response.data.items);
+      const users = await searchUsers(q, 1);
+      const detailedResults = await fetchFullResults(users);
       setResults(detailedResults);
     } catch (error) {
       console.error('Search failed:', error);
@@ -55,15 +49,13 @@ const SearchForm = () => {
   };
 
   const loadMoreUsers = async () => {
-    const nextPage = page + 1;
     setLoading(true);
+    const nextPage = page + 1;
 
     try {
-      const response = await axios.get(
-        `https://api.github.com/search/users?q=${encodeURIComponent(query)}&per_page=10&page=${nextPage}`
-      );
-      const detailedUsers = await fetchUserDetails(response.data.items);
-      setResults((prev) => [...prev, ...detailedUsers]);
+      const users = await searchUsers(query, nextPage);
+      const detailedResults = await fetchFullResults(users);
+      setResults((prev) => [...prev, ...detailedResults]);
       setPage(nextPage);
     } catch (error) {
       console.error('Error loading more users:', error);
@@ -82,7 +74,6 @@ const SearchForm = () => {
           placeholder="GitHub username"
           className="w-full p-2 border rounded-md"
         />
-
         <input
           type="text"
           value={location}
@@ -90,7 +81,6 @@ const SearchForm = () => {
           placeholder="Location"
           className="w-full p-2 border rounded-md"
         />
-
         <input
           type="number"
           value={minRepos}

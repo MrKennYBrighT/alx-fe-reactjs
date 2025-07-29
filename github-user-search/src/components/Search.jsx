@@ -1,5 +1,5 @@
-// src/components/SearchForm.jsx
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const SearchForm = ({ onSearch }) => {
   const [username, setUsername] = useState('');
@@ -16,8 +16,9 @@ const SearchForm = ({ onSearch }) => {
       <h2 className="text-xl font-semibold text-gray-700">GitHub User Search</h2>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600">Username</label>
+        <label htmlFor="username" className="block text-sm font-medium text-gray-600">Username</label>
         <input
+          id="username"
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -28,8 +29,9 @@ const SearchForm = ({ onSearch }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600">Location</label>
+        <label htmlFor="location" className="block text-sm font-medium text-gray-600">Location</label>
         <input
+          id="location"
           type="text"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
@@ -39,8 +41,9 @@ const SearchForm = ({ onSearch }) => {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-600">Minimum Repositories</label>
+        <label htmlFor="minRepos" className="block text-sm font-medium text-gray-600">Minimum Repositories</label>
         <input
+          id="minRepos"
           type="number"
           value={minRepos}
           onChange={(e) => setMinRepos(e.target.value)}
@@ -57,6 +60,10 @@ const SearchForm = ({ onSearch }) => {
       </button>
     </form>
   );
+};
+
+SearchForm.propTypes = {
+  onSearch: PropTypes.func.isRequired,
 };
 
 export default SearchForm;

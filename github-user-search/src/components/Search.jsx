@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   buildSearchQuery,
   searchUsers,
-  fetchUserDetails as fetchUserData
+  fetchUserData
 } from '../services/githubService';
 
 const Search = () => {
@@ -81,6 +81,11 @@ const Search = () => {
       </form>
 
       <div className="mt-6 results">
+        {results.length === 0 && !loading && (
+          <p className="text-center text-gray-500">
+            Looks like we cant find the user
+          </p>
+        )}
         {results.map((user) => (
           <div
             key={user.id}
@@ -89,10 +94,17 @@ const Search = () => {
             onClick={() => handleUserClick(user.url)}
             onKeyDown={(e) => handleKeyDown(e, user.url)}
             aria-label={`View details for ${user.login}`}
-            className="p-4 mb-3 border rounded cursor-pointer user-card hover:bg-gray-100"
+            className="flex items-center gap-4 p-4 mb-3 border rounded cursor-pointer user-card hover:bg-gray-100"
           >
-            <h3 className="text-lg font-semibold">{user.login}</h3>
-            <p>{user.html_url}</p>
+            <img
+              src={user.avatar_url}
+              alt={`${user.login} avatar`}
+              className="w-12 h-12 rounded-full"
+            />
+            <div>
+              <h3 className="text-lg font-semibold">{user.login}</h3>
+              <p>{user.html_url}</p>
+            </div>
           </div>
         ))}
       </div>

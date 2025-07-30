@@ -25,6 +25,11 @@ const Search = () => {
     setLoading(false);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
   const handleUserClick = async (userUrl) => {
     try {
       const data = await fetchUserData(userUrl);
@@ -42,7 +47,10 @@ const Search = () => {
 
   return (
     <div className="p-4 search-container">
-      <div className="grid grid-cols-1 gap-2 mb-4 input-group md:grid-cols-3">
+      <form
+        onSubmit={handleSubmit}
+        className="grid grid-cols-1 gap-2 mb-4 input-group md:grid-cols-3"
+      >
         <input
           type="text"
           placeholder="Username"
@@ -64,11 +72,13 @@ const Search = () => {
           onChange={(e) => setMinRepos(Number(e.target.value))}
           className="input input-bordered"
         />
-      </div>
-
-      <button onClick={handleSearch} className="w-full btn btn-primary">
-        {loading ? 'Searching...' : 'Search'}
-      </button>
+        <button
+          type="submit"
+          className="w-full btn btn-primary md:col-span-3"
+        >
+          {loading ? 'Searching...' : 'Search'}
+        </button>
+      </form>
 
       <div className="mt-6 results">
         {results.map((user) => (

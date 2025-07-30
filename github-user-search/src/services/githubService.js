@@ -28,7 +28,7 @@ export async function searchUsers(query, page = 1, perPage = 10) {
 /**
  * Fetch detailed GitHub user profile.
  */
-export async function fetchUserDetails(userUrl) {
+export async function fetchUserData(userUrl) {
   const response = await axios.get(userUrl);
   return response.data;
 }

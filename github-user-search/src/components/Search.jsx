@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   buildSearchQuery,
   searchUsers,
-  fetchUserData
+  fetchUserDetails as fetchUserData
 } from '../services/githubService';
 
 const Search = () => {

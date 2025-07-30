@@ -1,7 +1,5 @@
-// src/App.jsx
-
 import React, { useState } from 'react';
-import { fetchUserData } from './services/githubService';
+import { fetchUserDetails as fetchUserData } from './services/githubService';
 import Search from './components/Search';
 
 function App() {

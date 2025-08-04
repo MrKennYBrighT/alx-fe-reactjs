@@ -1,16 +1,14 @@
-// src/components/UserProfile.jsx
-
 function UserProfile() {
   return (
-    <div className="max-w-sm p-8 mx-auto my-20 bg-gray-100 rounded-lg shadow-lg">
+    <div className="max-w-xs p-4 mx-auto my-20 bg-gray-100 rounded-lg shadow-lg md:p-8 md:max-w-sm">
       <img
         src="https://via.placeholder.com/150"
         alt="User"
-        className="mx-auto rounded-full w-36 h-36"
+        className="w-24 h-24 mx-auto rounded-full md:w-36 md:h-36"
       />
-      <h1 className="my-4 text-xl text-center text-blue-800">Kenny Bright</h1>
-      <p className="text-base text-center text-gray-600">
-        I Love to write code and explore new technologies.
+      <h1 className="my-4 text-lg text-center text-blue-800 md:text-xl">John Doe</h1>
+      <p className="text-sm text-center text-gray-600 md:text-base">
+        Developer at Example Co. Loves to write code and explore new technologies.
       </p>
     </div>
   );

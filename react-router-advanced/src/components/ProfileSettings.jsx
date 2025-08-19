@@ -1,5 +1,6 @@
-// src/pages/ProfileSettings.jsx
+// src/components/ProfileSettings.jsx
 function ProfileSettings() {
-  return <div>Adjust your profile settings here.</div>;
+  return <div>Profile Settings Section</div>;
 }
+
 export default ProfileSettings;

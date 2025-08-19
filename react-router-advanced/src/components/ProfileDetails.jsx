@@ -1,5 +1,6 @@
-// src/pages/ProfileDetails.jsx
+// src/components/ProfileDetails.jsx
 function ProfileDetails() {
-  return <div>Here are your profile details.</div>;
+  return <div>Profile Details Section</div>;
 }
+
 export default ProfileDetails;

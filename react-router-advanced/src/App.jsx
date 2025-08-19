@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home';
 import About from './components/About';
 import Profile from './components/Profile';
-import ProfileDetails from './components/ProfileDetails';
-import ProfileSettings from './components/ProfileSettings';
 import BlogPost from './components/BlogPost';
 
 function App() {
@@ -22,11 +20,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
 
-        {/* Nested Routes for Profile */}
-        <Route path="/profile" element={<Profile />}>
-          <Route path="details" element={<ProfileDetails />} />
-          <Route path="settings" element={<ProfileSettings />} />
-        </Route>
+        {/* Profile Route with Nested Routing handled inside Profile.jsx */}
+        <Route path="/profile/*" element={<Profile />} />
 
         {/* Dynamic Route for Blog Posts */}
         <Route path="/blog/:postId" element={<BlogPost />} />

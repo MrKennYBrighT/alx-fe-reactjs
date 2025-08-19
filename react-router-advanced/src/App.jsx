@@ -4,6 +4,7 @@ import Home from './components/Home';
 import About from './components/About';
 import Profile from './components/Profile';
 import BlogPost from './components/BlogPost';
+import ProtectedRoute from './components/ProtectedRoute'; // ✅ Import added
 
 function App() {
   return (
@@ -20,8 +21,15 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
 
-        {/* Profile Route with Nested Routing handled inside Profile.jsx */}
-        <Route path="/profile/*" element={<Profile />} />
+        {/* ✅ Protected Profile Route */}
+        <Route
+          path="/profile/*"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
         {/* ✅ Dynamic Route with correct path */}
         <Route path="/blog/:id" element={<BlogPost />} />

@@ -1,10 +1,11 @@
 // src/components/ProtectedRoute.jsx
 import { Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 // Simulated authentication hook
 function useAuth() {
   const user = { loggedIn: true }; // Change to false to simulate unauthenticated
-  return user && user.loggedIn;
+  return user?.loggedIn; // ✅ Optional chaining
 }
 
 function ProtectedRoute({ children }) {
@@ -16,5 +17,10 @@ function ProtectedRoute({ children }) {
 
   return children;
 }
+
+// ✅ Prop validation
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default ProtectedRoute;

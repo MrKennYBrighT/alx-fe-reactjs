@@ -23,8 +23,8 @@ function App() {
         {/* Profile Route with Nested Routing handled inside Profile.jsx */}
         <Route path="/profile/*" element={<Profile />} />
 
-        {/* Dynamic Route for Blog Posts */}
-        <Route path="/blog/:postId" element={<BlogPost />} />
+        {/* ✅ Dynamic Route with correct path */}
+        <Route path="/blog/:id" element={<BlogPost />} />
       </Routes>
     </Router>
   );

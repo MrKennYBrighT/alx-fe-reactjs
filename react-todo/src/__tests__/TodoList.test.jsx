@@ -1,5 +1,6 @@
+// App.test.jsx
 import { render, screen, fireEvent } from '@testing-library/react';
-import TodoList from './TodoList';
+import TodoList from '../components/TodoList';
 
 test('adds a new todo item', () => {
   render(<TodoList />);
@@ -11,4 +12,3 @@ test('adds a new todo item', () => {
 
   expect(screen.getByText('Test Todo')).toBeInTheDocument();
 });
-

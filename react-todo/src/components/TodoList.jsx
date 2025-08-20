@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AddTodoForm from './AddTodoForm';
 
 function TodoList() {
   const [todos, setTodos] = useState([
@@ -6,12 +7,9 @@ function TodoList() {
     { text: 'Build a Todo App', completed: false },
     { text: 'Write Tests', completed: false }
   ]);
-  const [newTodo, setNewTodo] = useState('');
 
-  const handleAddTodo = () => {
-    if (newTodo.trim() === '') return;
-    setTodos([...todos, { text: newTodo, completed: false }]);
-    setNewTodo('');
+  const handleAddTodo = (text) => {
+    setTodos([...todos, { text, completed: false }]);
   };
 
   const handleToggleTodo = (index) => {
@@ -28,13 +26,7 @@ function TodoList() {
   return (
     <div>
       <h2>Todo List</h2>
-      <input
-        type="text"
-        placeholder="Add new todo"
-        value={newTodo}
-        onChange={(e) => setNewTodo(e.target.value)}
-      />
-      <button onClick={handleAddTodo}>Add</button>
+      <AddTodoForm onAdd={handleAddTodo} />
       <ul>
         {todos.map((todo, index) => (
           <li
